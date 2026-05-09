@@ -648,17 +648,31 @@ async def get_predefined_voices_api():
 
 # --- File Upload Endpoints ---
 @app.post("/upload_reference", tags=["File Management"])
-async def upload_reference_audio_endpoint(files: List[UploadFile] = File(...)):
+async def upload_reference_audio_endpoint(
+    files: Optional[List[UploadFile]] = File(None),
+    file: Optional[UploadFile] = File(None)
+):
     """
     Handles uploading of reference audio files (.wav, .mp3) for voice cloning.
-    Validates files and saves them to the configured reference audio path.
+    Consolidates files from both 'files' and 'file' field names.
     """
-    logger.info(f"Request to /upload_reference with {len(files)} file(s).")
+    # Consolidate files from both potential field names
+    all_files = []
+    if files:
+        all_files.extend(files)
+    if file:
+        all_files.append(file)
+
+    if not all_files:
+        logger.error("Request to /upload_reference with no files.")
+        raise HTTPException(status_code=400, detail="No files provided in 'files' or 'file' field.")
+
+    logger.info(f"Request to /upload_reference with {len(all_files)} file(s).")
     ref_path = get_reference_audio_path(ensure_absolute=True)
     uploaded_filenames_successfully: List[str] = []
     upload_errors: List[Dict[str, str]] = []
 
-    for file in files:
+    for file in all_files:
         if not file.filename:
             upload_errors.append(
                 {"filename": "Unknown", "error": "File received with no filename."}
@@ -716,7 +730,7 @@ async def upload_reference_audio_endpoint(files: List[UploadFile] = File(...)):
 
     all_current_reference_files = utils.get_valid_reference_files()
     response_data = {
-        "message": f"Processed {len(files)} file(s).",
+        "message": f"Processed {len(all_files)} file(s).",
         "uploaded_files": uploaded_filenames_successfully,
         "all_reference_files": all_current_reference_files,
         "errors": upload_errors,

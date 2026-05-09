@@ -52,7 +52,7 @@ ui_state:
     freedom! [sniff] That or more of Kevin''s cologne!
 
     '
-  last_voice_mode: predefined
+  last_voice_mode: clone
   last_predefined_voice: Connor.wav
   last_reference_file: Gianna.wav
   last_seed: 3000
