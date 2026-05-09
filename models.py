@@ -93,6 +93,9 @@ class CustomTTSRequest(BaseModel):
     language: Optional[str] = Field(
         None, description="Overrides default language if provided."
     )
+    stream_progress: Optional[bool] = Field(
+        False, description="If True, returns a stream of JSON progress events followed by the final audio."
+    )
 
 
 class ErrorResponse(BaseModel):
