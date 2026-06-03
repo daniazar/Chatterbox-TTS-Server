@@ -309,7 +309,7 @@ def load_model() -> bool:
         logger.info(f"Final device selection: {model_device}")
 
         # Get the model selector from config
-        model_selector = config_manager.get_string("model.repo_id", "chatterbox-turbo")
+        model_selector = config_manager.get_string("model.repo_id", "chatterbox")
 
         logger.info(f"Model selector from config: '{model_selector}'")
 

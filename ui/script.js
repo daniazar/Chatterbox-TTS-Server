@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     // Model information state
     let currentModelInfo = null;
-    let selectedModelSelector = 'chatterbox-turbo';
+    let selectedModelSelector = 'chatterbox';
     let modelChangesPending = false;
     let lastMultilingualLanguage = 'en'; // Remember language selection for Multilingual model
 
@@ -349,7 +349,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (modelSelect && !modelChangesPending) {
             let selectorValue = 'chatterbox';
             if (modelInfo.type === 'turbo') {
-                selectorValue = 'chatterbox-turbo';
+                selectorValue = 'chatterbox';
             } else if (modelInfo.type === 'multilingual') {
                 selectorValue = 'chatterbox-multilingual';
             }
@@ -464,7 +464,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         const newSelector = modelSelect.value;
         let currentSelector = 'chatterbox';
         if (currentModelInfo?.type === 'turbo') {
-            currentSelector = 'chatterbox-turbo';
+            currentSelector = 'chatterbox';
         } else if (currentModelInfo?.type === 'multilingual') {
             currentSelector = 'chatterbox-multilingual';
         }
