@@ -1,0 +1,5 @@
+venv/
+model_cache/
+outputs/
+.git
+__pycache__/
